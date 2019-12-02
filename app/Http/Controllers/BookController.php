@@ -7,18 +7,18 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, BookRepository $book_repository)
     {
         if ($request->filled('search')) {
-            $results = BookRepository::find($request->get('search'));
+            $results = $book_repository->find($request->get('search'));
         }
 
         return view('books.index', compact('results'));
     }
 
-    public function show(string $isbn)
+    public function show(string $isbn, BookRepository $book_repository)
     {
-        if ( ! $book = BookRepository::getBook($isbn)) {
+        if ( ! $book = $book_repository->getBook($isbn)) {
             abort(403);
         }
 
