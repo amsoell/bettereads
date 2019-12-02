@@ -33,8 +33,8 @@
                     </form>
                     @isset($results)
                         <ul>
-                            @foreach($results as $entry)
-                            <li>{{ $entry->title }}</li>
+                            @foreach($results as $key => $entry)
+                            <li><a href="{{ route('books.show', $key) }}">{{ $entry->title }}</a></li>
                             @endforeach
                         </ul>
                     @endisset

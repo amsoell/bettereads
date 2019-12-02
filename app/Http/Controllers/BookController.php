@@ -15,4 +15,13 @@ class BookController extends Controller
 
         return view('books.index', compact('results'));
     }
+
+    public function show(string $isbn)
+    {
+        if ( ! $book = BookRepository::getBook($isbn)) {
+            abort(403);
+        }
+
+        return view('books.show', compact('book'));
+    }
 }

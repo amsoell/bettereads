@@ -23,3 +23,4 @@ Route::get('auth/redirect/{provider}', 'Auth\LoginController@redirect')->name('l
 Route::get('callback/{provider}', 'Auth\LoginController@callback')->name('login.callback');
 
 Route::get('books', 'BookController@index')->name('books');
+Route::get('books/{isbn}', 'BookController@show')->name('books.show');
