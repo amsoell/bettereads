@@ -21,3 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('auth/redirect/{provider}', 'Auth\LoginController@redirect')->name('login.provider');
 Route::get('callback/{provider}', 'Auth\LoginController@callback')->name('login.callback');
+
+Route::get('books', 'BookController@index')->name('books');
