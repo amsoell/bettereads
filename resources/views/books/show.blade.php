@@ -5,7 +5,21 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ $book->title}}</div>
+                <div class="card-header">
+                    {{ $book->title}}
+                    @if (auth()->user()->books->pluck('isbn')->contains($isbn))
+                    <form method="POST" action="{{ route('library.delete', $isbn) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-primary pull-right">Remove from library</button>
+                    </form>
+                    @else
+                    <form method="POST" action="{{ route('library.store', $isbn) }}">
+                        @csrf
+                        <button class="btn btn-primary pull-right">Add to library</button>
+                    </form>
+                    @endif
+                </div>
 
                 <div class="card-body row">
                     @isset ($book->cover)

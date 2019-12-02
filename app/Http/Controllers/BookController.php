@@ -22,6 +22,6 @@ class BookController extends Controller
             abort(403);
         }
 
-        return view('books.show', compact('book'));
+        return view('books.show', compact('book', 'isbn'));
     }
 }

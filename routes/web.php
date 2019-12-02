@@ -24,3 +24,6 @@ Route::get('callback/{provider}', 'Auth\LoginController@callback')->name('login.
 
 Route::get('books', 'BookController@index')->name('books');
 Route::get('books/{isbn}', 'BookController@show')->name('books.show');
+
+Route::post('library/{isbn}', 'LibraryController@store')->name('library.store');
+Route::delete('library/{isbn}', 'LibraryController@delete')->name('library.delete');
