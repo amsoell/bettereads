@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 class OpenLibrary
 {
     private $hostname = 'https://openlibrary.org';
+    private $cache_enabled = true;
 
     public function __construct()
     {
@@ -17,8 +18,8 @@ class OpenLibrary
 
     public function find(string $search, string $domain = 'q')
     {
-        $response = $this->api->get(sprintf('%s/search.json?%s=%s', $this->hostname, $this->translateDomain($domain), urlencode($search)));
-        $results = collect(json_decode($response->getBody())->docs)->filter(function ($item) {
+        $results = $this->getApi(sprintf('search.json?%s=%s', $this->translateDomain($domain), urlencode($search)));
+        $results = collect($results->docs)->filter(function ($item) {
             return property_exists($item, 'isbn');
         })->keyBy(function ($item) {
             return Arr::first($item->isbn);
@@ -29,10 +30,34 @@ class OpenLibrary
 
     public function getBook(string $isbn)
     {
-        $response = $this->api->get(sprintf('%s/api/books?bibkeys=isbn:%s&jscmd=data&format=json', $this->hostname, $isbn));
-        $results = json_decode($response->getBody());
+        $results = collect($this->getApi(sprintf('api/books?bibkeys=isbn:%s&jscmd=data&format=json', $isbn)));
 
         return Arr::first($results);
+    }
+
+    public function withoutCache()
+    {
+        $this->cache_enabled = false;
+
+        return $this;
+    }
+
+    private function getApi(string $endpoint)
+    {
+        if ($this->cache_enabled && cache()->has($endpoint)) {
+            $results = cache()->get($endpoint);
+            dump('from-cache');
+        } else {
+            $uri = sprintf('%s/%s', $this->hostname, $endpoint);
+            $response = $this->api->get($uri);
+            $results = json_decode($response->getBody());
+
+            if ($this->cache_enabled) {
+                cache()->put($endpoint, $results);
+            }
+        }
+
+        return $results;
     }
 
     private function translateDomain(string $domain)
