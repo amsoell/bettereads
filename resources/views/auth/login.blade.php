@@ -71,6 +71,9 @@
                             <a href="{{ route('login.provider', 'facebook') }}" class="btn btn-primary">
                                 <i class="fa fa-facebook"></i> Facebook Login
                             </a>
+                            <a href="{{ route('login.provider', 'twitter') }}" class="btn btn-primary">
+                                <i class="fa fa-facebook"></i> Twitter Login
+                            </a>
                         </div>
                     </div>
                 </div>
