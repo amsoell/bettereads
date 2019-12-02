@@ -33,7 +33,7 @@
                     </form>
                     @isset($results)
                         <ul>
-                            @foreach($results->docs as $entry)
+                            @foreach($results as $entry)
                             <li>{{ $entry->title }}</li>
                             @endforeach
                         </ul>
