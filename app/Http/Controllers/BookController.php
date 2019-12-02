@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client as GuzzleClient;
+use App\Http\Repositories\OpenLibrary as BookRepository;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    public function index(Request $request, GuzzleClient $guzzle)
+    public function index(Request $request)
     {
-        if ($request->has('search')) {
-            $response = $guzzle->get(sprintf('http://openlibrary.org/search.json?q=%s', urlencode($request->get('search'))));
-
-            $results = json_decode($response->getBody());
+        if ($request->filled('search')) {
+            $results = BookRepository::find($request->get('search'));
         }
 
         return view('books.index', compact('results'));
