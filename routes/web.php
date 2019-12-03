@@ -11,19 +11,25 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('auth/redirect/{provider}', 'Auth\LoginController@redirect')->name('login.provider');
 Route::get('callback/{provider}', 'Auth\LoginController@callback')->name('login.callback');
 
-Route::get('books', 'BookController@index')->name('books');
-Route::get('books/{book}', 'BookController@show')->name('books.show');
+Route::middleware('guest')->group(function () {
+    Route::redirect('/', 'login');
+});
 
-Route::post('library/{book}', 'LibraryController@store')->name('library.store');
-Route::delete('library/{book}', 'LibraryController@delete')->name('library.delete');
+Route::middleware('auth')->group(function () {
+    Route::redirect('/', 'library');
+
+    Route::prefix('library')->name('library')->group(function () {
+        Route::get('/', 'LibraryController@index');
+        Route::post('{book}', 'LibraryController@store')->name('.store');
+        Route::delete('{book}', 'LibraryController@delete')->name('.delete');
+    });
+});
+
+Route::prefix('books')->name('books')->group(function () {
+    Route::get('/', 'BookController@index');
+    Route::get('{book}', 'BookController@show')->name('.show');
+});
