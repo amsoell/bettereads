@@ -18,6 +18,7 @@ class CreateBookTable extends Migration
         Schema::create('book_user', function (Blueprint $table) {
             $table->bigInteger('book_id');
             $table->bigInteger('user_id');
+            $table->timestamps();
 
             $table->primary([
                 'book_id',

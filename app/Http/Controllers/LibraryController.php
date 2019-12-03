@@ -6,6 +6,11 @@ use App\Book;
 
 class LibraryController extends Controller
 {
+    public function index()
+    {
+        return view('library.index');
+    }
+
     public function store(Book $book)
     {
         auth()->user()->books()->syncWithoutDetaching([ $book->id ]);
