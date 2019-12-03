@@ -10,9 +10,11 @@
 
                 <div class="card-body">
                     <ul>
-                        @foreach (auth()->user()->books->sortByDesc('pivot.created_at') as $book)
+                        @forelse (auth()->user()->books->sortByDesc('pivot.created_at') as $book)
                             <li><a href="{{ route('books.show', $book->isbn) }}">{{ $book->title }}</a> &mdash; Added {{ $book->pivot->created_at->diffForHumans() }}</li>
-                        @endforeach
+                        @empty
+                        <p>Your library is empty. Go <a href="{{ route('books') }}">search for some great books</a>.</p>
+                        @endforelse
                     </ul>
                 </div>
             </div>
