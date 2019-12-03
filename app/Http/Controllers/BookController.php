@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Book;
 use App\Http\Repositories\OpenLibrary as BookRepository;
 use Illuminate\Http\Request;
 
@@ -16,12 +17,8 @@ class BookController extends Controller
         return view('books.index', compact('results'));
     }
 
-    public function show(string $isbn, BookRepository $book_repository)
+    public function show(Book $book)
     {
-        if ( ! $book = $book_repository->getBook($isbn)) {
-            abort(403);
-        }
-
-        return view('books.show', compact('book', 'isbn'));
+        return view('books.show', compact('book'));
     }
 }

@@ -13,7 +13,7 @@ Social network for tracking books. This project is really an excuse to implement
 - [x] Refactor API into a repository
 - [x] Cache results from Open Library API
 - [x] Allow users to add books to library
-- [ ] Update Book Route Model Binding via ISBN
+- [x] Update Book Route Model Binding via ISBN
 - [ ] Refactor functionality into Action classes
 - [ ] Caching via redis
 - [ ] Build audit system

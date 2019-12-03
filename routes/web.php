@@ -23,7 +23,7 @@ Route::get('auth/redirect/{provider}', 'Auth\LoginController@redirect')->name('l
 Route::get('callback/{provider}', 'Auth\LoginController@callback')->name('login.callback');
 
 Route::get('books', 'BookController@index')->name('books');
-Route::get('books/{isbn}', 'BookController@show')->name('books.show');
+Route::get('books/{book}', 'BookController@show')->name('books.show');
 
-Route::post('library/{isbn}', 'LibraryController@store')->name('library.store');
-Route::delete('library/{isbn}', 'LibraryController@delete')->name('library.delete');
+Route::post('library/{book}', 'LibraryController@store')->name('library.store');
+Route::delete('library/{book}', 'LibraryController@delete')->name('library.delete');
