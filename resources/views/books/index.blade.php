@@ -14,7 +14,7 @@
                             <label for="search" class="col-md-4 col-form-label text-md-right">{{ __('Title search') }}</label>
 
                             <div class="col-md-6">
-                                <input id="search" type="search" class="form-control @error('search') is-invalid @enderror" name="search" value="{{ old('search') }}" required autocomplete="search" autofocus>
+                                <input id="search" type="search" class="form-control @error('search') is-invalid @enderror" name="search" value="{{ old('search', request()->get('search')) }}" required autocomplete="search" autofocus>
 
                                 @error('search')
                                     <span class="invalid-feedback" role="alert">

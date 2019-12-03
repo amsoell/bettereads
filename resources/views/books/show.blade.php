@@ -10,15 +10,15 @@
                     {{ $book->title}}
                     @auth
                         @if (auth()->user()->books->pluck('isbn')->contains($book->isbn))
-                        <form method="POST" action="{{ route('library.delete', $book->isbn) }}">
+                        <form method="POST" action="{{ route('library.delete', $book->isbn) }}" class="float-right">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-primary pull-right">Remove from library</button>
+                            <button class="btn btn-primary">Remove from library</button>
                         </form>
                         @else
-                        <form method="POST" action="{{ route('library.store', $book->isbn) }}">
+                        <form method="POST" action="{{ route('library.store', $book->isbn) }}" class="float-right">
                             @csrf
-                            <button class="btn btn-primary pull-right">Add to library</button>
+                            <button class="btn btn-primary">Add to library</button>
                         </form>
                         @endif
                     @endauth
